@@ -1,0 +1,55 @@
+# Phantom
+
+region<
+    ID = Phantom
+    CTscan = wbw_f_100mm.mha
+    pivot = [0.5, 0.5, 0]
+    O = [0, 0, 0]
+    score = [dose-to-water]
+region>
+
+lUseInternalHU2Mat = f
+include: material.inp
+
+
+### Beam ###
+field: 1 ; O = [0,0,-40]; L=[10,20,30]; pivot = [0.5,0.5,0.2]
+
+pb<
+    ID = 1
+    fieldID = 1
+    particle = proton
+    Emean = 100
+    EFWHM = 0.01
+    Xsec = emittance
+
+    N = 0.0004     # 1 / 2500: physical weight per spot
+
+    emittanceX = 0.00252634
+    twissAlphaX = -0.712657
+    twissBetaX = 94.2953
+
+    emittanceY = 0.00352435
+    twissAlphaY = -0.209974
+    twissBetaY = 85.9008
+
+    emittanceRefPlaneDistance = 40
+pb>
+
+nprim = 4000
+
+## Deliver an 50 x 50 grid of pencil-beam spots
+
+def: rows = 50
+def: cols = 50
+def: spacing = 0.1  # cm = 1 mm
+
+for(i in range(rows))<
+    for(j in range(cols))<
+        def: x = (j - (cols-1)/2) * spacing
+        def: y = (i - (rows-1)/2) * spacing
+
+        transform: field_1 move_to $x $y -40
+        deliver: field_1
+    for>
+for>
