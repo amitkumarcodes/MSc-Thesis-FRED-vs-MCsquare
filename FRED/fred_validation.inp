@@ -1,0 +1,50 @@
+### 150 MeV pristine Bragg peak in the 200 mm water phantom
+### Beam parameters taken from the 150 MeV row of:
+### 20230127_GenericBeamModel.bm (UMCG_P1_v2)
+
+### Phantom and scoring
+region<
+    ID = Phantom
+    CTscan = CT_HU_200mm_water.mha
+    pivot = [0.5, 0.5, 0]
+    O = [0, 0, 0]
+    score = [dose-to-water]
+region>
+
+### External HU-to-material calibration
+include: HU2Mat.inp
+
+### Single on-axis field; source is 40 cm upstream of the phantom surface
+field: 1 ; O = [0,0,-40]; f = [0,0,1]; u = [0,1,0]; L = [10,20,30]; pivot = [0.5,0.5,0.2]
+
+### Single pencil beam
+### The .bm transverse parameters were converted from mm to FRED's cm units.
+pb<
+    ID = 1
+    fieldID = 1
+    particle = proton
+    N = 1
+
+    Edistrib = gaussian
+    Emean = 150.71950000
+    Estdev = 0.91637325
+
+    Xsec = emittance
+    twissAlphaX = -0.92946115243
+    twissBetaX = 206.76113208
+    emittanceX = 0.0012430191029
+
+    twissAlphaY = -0.86001130211
+    twissBetaY = 185.70942004
+    emittanceY = 0.0013501630879
+
+    emittanceRefPlaneDistance = 40
+pb>
+
+### Monte Carlo histories
+nprim = 1e7
+
+### Physics settings retained from the supplied FRED patient template
+IonizPotential = 78
+lWaterIpotForHUMaterials = true
+lAllowHUClamping = true
