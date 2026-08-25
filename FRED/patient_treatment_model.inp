@@ -1,0 +1,30 @@
+### Phantom ###
+region<
+    ID=phantom
+    CTscan='FREDCTfileName'
+    score = [FREDscore]
+    lWriteCTHU = false
+    lWriteLETd_parts = false
+    lWriteDensity = false
+region>
+
+include: FREDCTcalibFileName
+
+### Materials ###
+include: materials.inp
+
+### Regions ###
+include: regions.inp
+
+### Beam ###
+include: rtplan.inp
+nprim = FREDNprim
+
+### Physics ###
+IonizPotential=78
+lWaterIpotForHUMaterials=True
+
+
+### Control ###
+lAllowHUClamping = true
+allowOverlapping: gantry phantom
