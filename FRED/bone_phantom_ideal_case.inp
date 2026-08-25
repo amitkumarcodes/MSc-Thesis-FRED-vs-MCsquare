@@ -1,0 +1,29 @@
+### Phantom ###
+
+region<
+    ID = Phantom
+    CTscan = CT_HU_200mm_bone.mha
+    pivot = [0.5, 0.5, 0]
+    O = [0, 0, 0]
+    score = [dose-to-water]
+region>
+
+lUseInternalHU2Mat = t
+
+### Beam ###
+field: 1 ; O = [0,0,-40]; L=[10,20,30]; pivot = [0.5,0.5,0.2]
+
+pb<
+    ID = 1
+    fieldID = 1
+    particle = proton
+    Emean = 150
+    EFWHM = 0.01
+    Xsec = emittance
+
+    twissAlphaX = 0
+    twissBetaX = 1
+    emittanceX = 1e-8
+pb>
+
+nprim = 1e7
